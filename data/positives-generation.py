@@ -24,4 +24,4 @@ for i, label_sublist in enumerate(divide_list(label_list, 1)): # split list into
 
     for j, image in enumerate(results.images):
 
-        image.save( str(script_location) + "\\raw\\" + str(i+j) + "_" + label_list[i+j] + ".png" )  
+        image.save( str(script_location) + "\\raw\\positive\\" + str(i+j) + "_" + label_list[i+j] + ".png" )  
