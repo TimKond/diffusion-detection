@@ -1,3 +1,3 @@
 data/diffusion_and_real
-#model/BEiT/BEiT-diff-detect
+model/BEiT/BEiT-diff-detect
 __pycache__/
