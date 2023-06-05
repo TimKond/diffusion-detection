@@ -7,7 +7,7 @@ pos_path = str(script_location) + "\\positive"
 # If the dataset is gated/private, make sure you have run huggingface-cli login
 print("loading imagenet...")
 from datasets import load_dataset
-imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train")
+imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train[:1%]")
 imagenet_train = imagenet_train.select(list(range(20))) # dry run remove this
 
 # select images with aspect ratio not greater than 4/3
