@@ -1,12 +1,6 @@
-from sklearn.model_selection import train_test_split
-
-from os import listdir
-from os.path import isfile, join
-
 import pathlib
 script_location = pathlib.Path(__file__).parent.resolve()
 pos_path = str(script_location) + "\\positive"
-
 
 #### load imagenet1k
 
