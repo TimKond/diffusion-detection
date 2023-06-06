@@ -8,7 +8,7 @@ pos_path = str(script_location) + "\\positive"
 print("loading imagenet...")
 from datasets import load_dataset
 imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train[:1%]")
-imagenet_train = imagenet_train.select(list(range(20))) # dry run remove this
+imagenet_train = imagenet_train.select(list(range(100))) # dry run remove this
 
 # select images with aspect ratio not greater than 4/3
 print("filtering images...")
@@ -21,7 +21,7 @@ imagenet_id_labels = imagenet_train_filtered["label"]
 imagenet_labels = [mapping[id] for id in imagenet_id_labels]
 
 #### generate positives
-print("generating positives...")
+print("generating " + str(len(imagenet_id_labels)) + " positives...")
 from PositivesGeneration import generate_positives
 print(str(imagenet_labels))
 generate_positives(imagenet_labels)

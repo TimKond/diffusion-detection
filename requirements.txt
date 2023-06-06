@@ -1,0 +1,5 @@
+datasets
+diffusers
+numpy
+torch
+transformers
