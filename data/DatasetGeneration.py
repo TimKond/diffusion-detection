@@ -1,3 +1,7 @@
+from PositivesGeneration import generate_positives
+from datasets import load_dataset, load_from_disk, interleave_datasets
+from ImagenetMapping import mapping
+
 import pathlib
 script_location = pathlib.Path(__file__).parent.resolve()
 pos_path = str(script_location) + "\\positive"
@@ -6,7 +10,6 @@ pos_path = str(script_location) + "\\positive"
 
 # If the dataset is gated/private, make sure you have run huggingface-cli login
 print("loading imagenet...")
-from datasets import load_dataset, load_from_disk
 # imagenet_train = load_from_disk("sub-imagenet")
 imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train[:1%]")
 imagenet_train = imagenet_train.select(list(range(100))) # dry run remove this
@@ -17,13 +20,11 @@ imagenet_train_filtered = imagenet_train.filter(lambda image: image["image"].siz
 
 # create list with labels
 print("creating list with labels...")
-from ImagenetMapping import mapping
 imagenet_id_labels = imagenet_train_filtered["label"]
 imagenet_labels = [mapping[id] for id in imagenet_id_labels]
 
 #### generate positives
 print("generating " + str(len(imagenet_id_labels)) + " positives...")
-from PositivesGeneration import generate_positives
 print(str(imagenet_labels))
 generate_positives(imagenet_labels)
 
@@ -39,7 +40,6 @@ negative_dataset = imagenet_train_filtered.add_column(name="label", column=[0]*l
 
 #### merge datasets
 print("merging datasets...")
-from datasets import interleave_datasets
 dataset_no_split = interleave_datasets([postive_dataset, negative_dataset])
 
 #### split dataset
