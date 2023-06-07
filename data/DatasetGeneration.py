@@ -11,12 +11,12 @@ pos_path = str(script_location) + "\\positive"
 # If the dataset is gated/private, make sure you have run huggingface-cli login
 print("loading imagenet...")
 # imagenet_train = load_from_disk("sub-imagenet")
-imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train[:1%]")
-imagenet_train = imagenet_train.select(list(range(100))) # dry run remove this
+imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train[:4%]")
 
 # select images with aspect ratio not greater than 4/3
 print("filtering images...")
 imagenet_train_filtered = imagenet_train.filter(lambda image: image["image"].size[0] / image["image"].size[1] <= 4/3 and image["image"].size[1] / image["image"].size[0] <= 4/3 and image["image"].size[0] >= 224 and image["image"].size[1] >= 224)
+imagenet_train_filtered = imagenet_train_filtered.select(list(range(10000))) # dry run; try to remove this lol
 
 # create list with labels
 print("creating list with labels...")
@@ -25,7 +25,6 @@ imagenet_labels = [mapping[id] for id in imagenet_id_labels]
 
 #### generate positives
 print("generating " + str(len(imagenet_id_labels)) + " positives...")
-print(str(imagenet_labels))
 generate_positives(imagenet_labels)
 
 #### create positives dataset 
