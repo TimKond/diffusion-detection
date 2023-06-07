@@ -6,7 +6,8 @@ pos_path = str(script_location) + "\\positive"
 
 # If the dataset is gated/private, make sure you have run huggingface-cli login
 print("loading imagenet...")
-from datasets import load_dataset
+from datasets import load_dataset, load_from_disk
+# imagenet_train = load_from_disk("sub-imagenet")
 imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train[:1%]")
 imagenet_train = imagenet_train.select(list(range(100))) # dry run remove this
 
