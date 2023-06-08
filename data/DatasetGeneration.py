@@ -4,7 +4,9 @@ from ImagenetMapping import mapping
 
 import pathlib
 script_location = pathlib.Path(__file__).parent.resolve()
-pos_path = str(script_location) + "\\positive"
+pos_path = str(script_location) + "\\positive\\train"
+
+GENERATE_POSITIVES = False
 
 #### load imagenet1k
 
@@ -24,8 +26,11 @@ imagenet_id_labels = imagenet_train_filtered["label"]
 imagenet_labels = [mapping[id] for id in imagenet_id_labels]
 
 #### generate positives
-print("generating " + str(len(imagenet_id_labels)) + " positives...")
-generate_positives(imagenet_labels)
+if GENERATE_POSITIVES:
+    print("generating " + str(len(imagenet_id_labels)) + " positives...")
+    generate_positives(imagenet_labels)
+else:
+    print("using only postives from dir")
 
 #### create positives dataset 
 print("creating positives dataset...")
@@ -43,8 +48,8 @@ dataset_no_split = interleave_datasets([postive_dataset, negative_dataset])
 
 #### split dataset
 print("train test vali split...")
-train_vali = dataset_no_split.train_test_split(test_size=0.15, seed=42)
-train_test_vali = train_vali["train"].train_test_split(test_size=0.17647058824, seed=42) # to get a 70, 15, 15 split 0.15 / (1-0.15) = 0.17647058823
+train_vali = dataset_no_split.train_test_split(test_size=0.05, seed=42)
+train_test_vali = train_vali["train"].train_test_split(test_size=0.05263, seed=42) # to get a 90, 5, 5 split 0.05 / (1-0.05) = 0.05263
 train_test_vali["vali"] = train_vali["test"]
 
 #### save dataset

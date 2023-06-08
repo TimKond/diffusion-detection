@@ -29,7 +29,9 @@ def generate_positives(label_list):
 
             # convert to jpg; major change; imagenet is also jpg
             rgb_im = image.convert('RGB')
-            rgb_im.save( str(script_location) + "\\positive\\" + str(i+j) + "_" + label_list[i+j] + ".jpg", quality=75) # default pil quality is 75; quailty needs to match imagenet quality, this could f the training  
+            file_name = str(i+j) + "_" + label_list[i+j]
+            file_name = file_name.replace("train", "trn") # datasets reads a file with train in file name in the train directory twice :/
+            rgb_im.save( str(script_location) + "\\positive\\train\\" + file_name + ".jpg", quality=75) # default pil quality is 75; quailty needs to match imagenet quality, this could f the training  
 
 if __name__ == "__main__":
     generate_positives(test_label_list)
