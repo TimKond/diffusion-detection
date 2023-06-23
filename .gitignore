@@ -1,5 +1,6 @@
 data/diffusion_and_real
 data/positive
 model/BEiT/BEiT-diff-detect
+model/BEiT/BEiT-diff-detect-old
 __pycache__/
 .vs/

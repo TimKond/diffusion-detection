@@ -52,7 +52,7 @@ model = BeitForImageClassification.from_pretrained(
     num_labels=len(labels),
     id2label={str(i): c for i, c in enumerate(labels)},
     label2id={c: str(i) for i, c in enumerate(labels)}
-)
+).to("cuda")
 
 from transformers import TrainingArguments
 
@@ -62,9 +62,9 @@ training_args = TrainingArguments(
   evaluation_strategy="steps",
   num_train_epochs=1,
   fp16=True,
-  save_steps=1000,
-  eval_steps=100,
-  logging_steps=10,
+  save_steps=5000,
+  eval_steps=1000,
+  logging_steps=1125,
   learning_rate=2e-4,
   save_total_limit=2,
   remove_unused_columns=False,
@@ -85,17 +85,15 @@ trainer = Trainer(
     tokenizer=processor,
 )
 
-# start the training
+if __name__ == "__main__":
+    # start the training
+    train_results = trainer.train()
+    trainer.save_model()
+    trainer.log_metrics("train", train_results.metrics)
+    trainer.save_metrics("train", train_results.metrics)
+    trainer.save_state()
 
-train_results = trainer.train()
-trainer.save_model()
-trainer.log_metrics("train", train_results.metrics)
-trainer.save_metrics("train", train_results.metrics)
-trainer.save_state()
-
-# eval
-
-metrics = trainer.evaluate(prepared_ds['test'])
-trainer.log_metrics("eval", metrics)
-trainer.save_metrics("eval", metrics)
-
+    # eval
+    metrics = trainer.evaluate(prepared_ds['test'])
+    trainer.log_metrics("eval", metrics)
+    trainer.save_metrics("eval", metrics)
