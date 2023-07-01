@@ -2,5 +2,7 @@ data/diffusion_and_real
 data/positive
 model/BEiT/BEiT-diff-detect
 model/BEiT/BEiT-diff-detect-old
+model/CNN/ds-tf
+model/CNN/CNN
 __pycache__/
 .vs/
