@@ -4,5 +4,6 @@ model/BEiT/BEiT-diff-detect
 model/BEiT/BEiT-diff-detect-old
 model/CNN/ds-tf
 model/CNN/CNN
+model/CNN/CNN-2
 __pycache__/
 .vs/
