@@ -3,7 +3,9 @@ data/positive
 model/BEiT/BEiT-diff-detect
 model/BEiT/BEiT-diff-detect-old
 model/CNN/ds-tf
+model/CNN/ds-tf-224
 model/CNN/CNN
 model/CNN/CNN-2
+model/CNN/CNN-exp
 __pycache__/
 .vs/
