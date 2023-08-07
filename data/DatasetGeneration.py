@@ -6,21 +6,21 @@ import pathlib
 script_location = pathlib.Path(__file__).parent.resolve()
 pos_path = str(script_location) + "\\positive\\train"
 
-GENERATE_POSITIVES = False
+GENERATE_POSITIVES = False # if new positives will be generated or just be read from /postive 
 
 #### load imagenet1k
 
-# If the dataset is gated/private, make sure you have run huggingface-cli login
+#### If the dataset is gated/private, make sure you have run huggingface-cli login
 print("loading imagenet...")
 # imagenet_train = load_from_disk("sub-imagenet")
-imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train[:4%]")
+imagenet_train = load_dataset("imagenet-1k", cache_dir="D:\.cache\huggingface\datasets", split="train[:4%]") # to save ressources
 
-# select images with aspect ratio not greater than 4/3
+#### select images with aspect ratio not greater than 4/3
 print("filtering images...")
 imagenet_train_filtered = imagenet_train.filter(lambda image: image["image"].size[0] / image["image"].size[1] <= 4/3 and image["image"].size[1] / image["image"].size[0] <= 4/3 and image["image"].size[0] >= 224 and image["image"].size[1] >= 224)
 imagenet_train_filtered = imagenet_train_filtered.select(list(range(10000))) # dry run; try to remove this lol
 
-# create list with labels
+#### create list with labels
 print("creating list with labels...")
 imagenet_id_labels = imagenet_train_filtered["label"]
 imagenet_labels = [mapping[id] for id in imagenet_id_labels]
